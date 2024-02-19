@@ -8,8 +8,8 @@ async function verifyRequest(request: NextApiRequest): Promise<boolean> {
   if (request.method === "POST") return false;
 
   console.log(request);
-  const signature = request.headers["X-Signature-Ed25519"] as string;
-  const timestamp = request.headers["X-Signature-Timestamp"] as string;
+  const signature = request.headers["x-signature-ed25519"] as string;
+  const timestamp = request.headers["x-signature-timestamp"] as string;
   const rawBody = await getRawBody(request);
 
   return verifyKey(rawBody, signature, timestamp, BOT_PUBLIC_KEY);
