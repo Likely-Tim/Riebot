@@ -18,8 +18,8 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  const isVerified = await verifyRequest(request);
-  if (isVerified) return response.status(401).end("Invalid request.");
+  if (!(await verifyRequest(request)))
+    return response.status(401).end("Invalid request.");
 
   switch (request.body["type"]) {
     case 1:
