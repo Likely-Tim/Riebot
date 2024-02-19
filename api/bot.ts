@@ -10,7 +10,7 @@ async function verifyRequest(request: VercelRequest): Promise<boolean> {
   console.log(request);
   const signature = request.headers["x-signature-ed25519"] as string;
   const timestamp = request.headers["x-signature-timestamp"] as string;
-  const rawBody = await getRawBody(request);
+  const rawBody = JSON.stringify(request.body);
 
   return verifyKey(rawBody, signature, timestamp, BOT_PUBLIC_KEY);
 }
