@@ -1,6 +1,6 @@
 import { InteractionType } from "discord-interactions";
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import { isValidRequest } from "../utils/utils.js";
+import { isValidRequest } from "./_utils/utils.js";
 
 export default async function handler(
   request: VercelRequest,
