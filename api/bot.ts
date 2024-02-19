@@ -1,4 +1,4 @@
-import { verifyKey } from "discord-interactions";
+import { InteractionType, verifyKey } from "discord-interactions";
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
 const BOT_PUBLIC_KEY = process.env.DISCORD_BOT_PUBLIC_KEY as string;
@@ -7,7 +7,6 @@ export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  console.log(request);
   const signature = request.headers["x-signature-ed25519"] as string;
   const timestamp = request.headers["x-signature-timestamp"] as string;
   const rawBody = JSON.stringify(request.body);
@@ -17,9 +16,9 @@ export default async function handler(
   }
 
   switch (request.body["type"]) {
-    case 1:
+    case InteractionType.PING:
       console.log("Discord Ping");
-      return response.status(200).json({ type: 1 });
+      return response.status(200).json({ type: InteractionType.PING });
     default:
       return response.status(404).end("Unknown type");
   }
