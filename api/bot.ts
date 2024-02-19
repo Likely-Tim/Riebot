@@ -7,6 +7,7 @@ const BOT_PUBLIC_KEY = process.env.DISCORD_BOT_PUBLIC_KEY as string;
 async function verifyRequest(request: NextApiRequest): Promise<boolean> {
   if (request.method === "POST") return false;
 
+  console.log(request);
   const signature = request.headers["X-Signature-Ed25519"] as string;
   const timestamp = request.headers["X-Signature-Timestamp"] as string;
   const rawBody = await getRawBody(request);
