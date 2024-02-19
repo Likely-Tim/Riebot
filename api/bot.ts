@@ -1,10 +1,9 @@
-import getRawBody from "raw-body";
 import { verifyKey } from "discord-interactions";
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
 const BOT_PUBLIC_KEY = process.env.DISCORD_BOT_PUBLIC_KEY as string;
 
-async function verifyRequest(request: VercelRequest): Promise<boolean> {
+async function verifyRequest(request: VercelRequest) {
   if (request.method === "POST") return false;
 
   console.log(request);
@@ -20,8 +19,9 @@ export default async function handler(
   response: VercelResponse
 ) {
   console.log(request);
-  if (!(await verifyRequest(request)))
+  if (!(await verifyRequest(request))) {
     return response.status(401).end("Invalid request.");
+  }
 
   switch (request.body["type"]) {
     case 1:
