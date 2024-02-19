@@ -1,17 +1,12 @@
-import { InteractionType, verifyKey } from "discord-interactions";
+import { InteractionType } from "discord-interactions";
 import { VercelRequest, VercelResponse } from "@vercel/node";
-
-const BOT_PUBLIC_KEY = process.env.DISCORD_BOT_PUBLIC_KEY as string;
+import { isValidRequest } from "./_utils/utils.js";
 
 export default async function handler(
   request: VercelRequest,
   response: VercelResponse
 ) {
-  const signature = request.headers["x-signature-ed25519"] as string;
-  const timestamp = request.headers["x-signature-timestamp"] as string;
-  const rawBody = JSON.stringify(request.body);
-
-  if (!verifyKey(rawBody, signature, timestamp, BOT_PUBLIC_KEY)) {
+  if (!isValidRequest(request)) {
     return response.status(401).end("Invalid request.");
   }
 
