@@ -4,12 +4,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const BOT_PUBLIC_KEY = process.env.DISCORD_BOT_PUBLIC_KEY as string;
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 async function verifyRequest(request: NextApiRequest): Promise<boolean> {
   if (request.method === "POST") return false;
 
